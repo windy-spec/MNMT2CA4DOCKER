@@ -153,7 +153,7 @@
             <div class="row align-items-center">
                 <div class="col-lg-6" data-aos="fade-right" data-aos-duration="1000">
                     <div class="img-hover-zoom shadow-lg">
-                        <img src="https://images.unsplash.com/photo-1442512595367-f273b5260b46?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" class="img-fluid" alt="Coffee Art">
+                        <img src="https://www.gracepaintingcrafts.com/cdn/shop/files/1_13_3a2a3233-c9b4-4de9-8d86-85335d3934ee_1200x1200.jpg?v=1762396409" class="img-fluid" alt="Coffee Art">
                     </div>
                 </div>
                 <div class="col-lg-6 ps-lg-5 mt-4 mt-lg-0" data-aos="fade-left" data-aos-duration="1000">

@@ -11,6 +11,7 @@ RUN apt-get update && apt-get install -y \
     unzip
 
 # Cài đặt các tiện ích mở rộng của PHP (bắt buộc cho Laravel)
+# LƯU Ý: 'mbstring' ở đây chính là cái sửa lỗi "undefined function mb_split"
 RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd
 
 # Cài đặt Composer (để quản lý thư viện PHP)
