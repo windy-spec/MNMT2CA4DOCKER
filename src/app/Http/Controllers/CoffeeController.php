@@ -9,41 +9,50 @@ class CoffeeController extends Controller
 {
     // 1. Hiển thị danh sách
     public function index() {
-        $coffees = Coffee::orderBy('id', 'desc')->get(); // Mới nhất lên đầu
-        return view('menu', ['list' => $coffees]);
+        $list = Coffee::orderBy('id', 'desc')->get();
+        return view('index', ['list' => $list]); // File view: index.blade.php
     }
 
-    // 2. Hiển thị form thêm mới
+    // 2. Form thêm mới
     public function create() {
-        return view('form_add');
+        return view('create'); // File view: create.blade.php
     }
 
-    // 3. Lưu dữ liệu thêm mới
+    // 3. Lưu món mới
     public function store(Request $request) {
-        // Validate dữ liệu
         $request->validate([
             'name' => 'required',
             'price' => 'required|numeric',
+            'description' => 'nullable',
         ]);
-
         Coffee::create($request->all());
         return redirect()->route('menu.index')->with('success', 'Đã thêm món mới thành công! ☕');
     }
 
-    // 4. Hiển thị form sửa
-    public function edit($id) {
+    // 4. Xem chi tiết món
+    public function show($id) {
         $coffee = Coffee::findOrFail($id);
-        return view('form_edit', ['coffee' => $coffee]);
+        return view('show', ['coffee' => $coffee]); // File view: show.blade.php
     }
 
-    // 5. Cập nhật dữ liệu
+    // 5. Form sửa
+    public function edit($id) {
+        $coffee = Coffee::findOrFail($id);
+        return view('edit', ['coffee' => $coffee]); // File view: edit.blade.php
+    }
+
+    // 6. Cập nhật
     public function update(Request $request, $id) {
+        $request->validate([
+            'name' => 'required',
+            'price' => 'required|numeric',
+        ]);
         $coffee = Coffee::findOrFail($id);
         $coffee->update($request->all());
         return redirect()->route('menu.index')->with('success', 'Cập nhật thành công! ✅');
     }
 
-    // 6. Xóa dữ liệu
+    // 7. Xóa
     public function destroy($id) {
         $coffee = Coffee::findOrFail($id);
         $coffee->delete();
