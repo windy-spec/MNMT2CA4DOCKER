@@ -3,129 +3,145 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title', 'The Coffee House')</title>
-    <!-- Bootstrap 5 -->
+    <title>@yield('title', 'Coffee Manager')</title>
+    
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
     
-    <!-- FONTS -->
-    <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400;600;700&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
     <style>
         :root {
-            --font-heading: 'Josefin Sans', sans-serif;
-            --font-body: 'Open Sans', sans-serif;
-            
-            --coffee-deep: #2c1e1a;   /* Nâu đen */
-            --coffee-brown: #5d4037;  /* Nâu đất */
-            --cream: #fdfbf7;         /* Trắng kem */
-            --gold: #c5a47e;          /* Vàng điểm nhấn */
+            --coffee-brown: #6F4E37;
+            --coffee-dark: #3b2f2f;
+            --coffee-light: #fdfbf7;
+            --gold: #C5A059;
+            --text-grey: #6c757d;
+            --border-color: rgba(0,0,0,0.05);
         }
 
-        body {
-            font-family: var(--font-body);
-            color: #555;
-            background-color: #f5f5f5;
+        body { 
+            background-color: #f8f9fa; 
+            font-family: 'Inter', sans-serif; 
+            color: #2c3e50;
+        }
+        
+        /* --- MINIMAL NAVBAR --- */
+        .navbar-minimal {
+            background: white;
+            border-bottom: 1px solid var(--border-color);
+            padding: 0.8rem 2rem;
+        }
+        .nav-link {
+            color: var(--text-grey) !important;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: 0.3s;
+            padding: 0.5rem 1rem !important;
+            border-radius: 8px;
+        }
+        .nav-link:hover, .nav-link.active {
+            background-color: var(--coffee-light);
+            color: var(--coffee-brown) !important;
         }
 
-        h1, h2, h3, h4, h5, .brand-font { font-family: var(--font-heading); }
-
-        /* Sidebar */
-        .sidebar {
-            width: 260px; height: 100vh; position: fixed; top: 0; left: 0;
-            background: var(--coffee-deep); color: #fff; padding: 40px 25px;
-            z-index: 1000; box-shadow: 4px 0 20px rgba(0,0,0,0.1);
-        }
-        .main-content { margin-left: 260px; padding: 40px; min-height: 100vh; }
-
-        .nav-link-custom {
-            color: rgba(255,255,255,0.6); padding: 12px 0; display: flex; align-items: center;
-            text-decoration: none; transition: 0.3s; font-family: var(--font-heading); font-size: 1.1rem;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
-        }
-        .nav-link-custom:hover, .nav-link-custom.active { color: var(--gold); padding-left: 10px; }
-        .nav-link-custom i { margin-right: 15px; font-size: 1.2rem; }
-
-        /* Form & Button */
-        .form-control-vintage {
-            border: 1px solid #ddd; background: #fff; padding: 12px 15px; border-radius: 4px;
-        }
-        .form-control-vintage:focus {
-            border-color: var(--coffee-brown); box-shadow: 0 0 0 3px rgba(93, 64, 55, 0.1);
-        }
+        /* --- CUSTOM BUTTONS --- */
         .btn-coffee {
-            background: var(--coffee-brown); color: #fff; border: none; padding: 10px 25px;
-            font-family: var(--font-heading); font-weight: 600; letter-spacing: 1px;
-            border-radius: 4px; transition: 0.3s;
+            background-color: var(--coffee-brown);
+            color: white;
+            border: none;
+            padding: 0.6rem 1.2rem;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.3s ease;
         }
-        .btn-coffee:hover { background: var(--coffee-deep); color: #fff; transform: translateY(-2px); }
+        .btn-coffee:hover { 
+            background-color: var(--coffee-dark); 
+            color: white; 
+            transform: translateY(-1px); 
+            box-shadow: 0 4px 12px rgba(111, 78, 55, 0.2);
+        }
 
-        /* Modal */
-        .modal-content { border: none; border-radius: 12px; }
-
-        @media (max-width: 992px) {
-            .sidebar { width: 70px; padding: 20px 10px; text-align: center; }
-            .sidebar span, .brand-text { display: none; }
-            .main-content { margin-left: 70px; padding: 20px; }
-            .nav-link-custom i { margin: 0; font-size: 1.5rem; }
-            .nav-link-custom:hover { padding-left: 0; }
+        /* --- GENERAL UTILS --- */
+        .card-minimal {
+            border: none;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.03);
+        }
+        
+        .form-control-minimal {
+            background-color: #f8f9fa;
+            border: 1px solid transparent;
+            padding: 0.6rem 1rem;
+        }
+        .form-control-minimal:focus {
+            background-color: white;
+            border-color: var(--coffee-brown);
+            box-shadow: none;
         }
     </style>
 </head>
 <body>
 
-    <!-- SIDEBAR -->
-    <div class="sidebar d-flex flex-column">
-        <div class="mb-5 brand-text">
-            <small class="text-uppercase text-white-50 small tracking-widest">Management</small>
-            <h2 class="text-white fw-bold m-0" style="letter-spacing: -1px;">Coffee<span style="color: var(--gold)">Hub.</span></h2>
-        </div>
-        
-        <nav class="flex-grow-1">
-            <a href="{{ route('dashboard') }}" class="nav-link-custom {{ Request::is('/') ? 'active' : '' }}">
-                <i class="bi bi-grid"></i> <span>Tổng Quan</span>
+    <nav class="navbar navbar-expand-lg navbar-minimal sticky-top mb-5">
+        <div class="container-fluid">
+            <a class="navbar-brand fw-bold d-flex align-items-center gap-2" href="#" style="color: var(--coffee-brown);">
+                <i class="bi bi-cup-hot-fill fs-4"></i>
+                <span style="letter-spacing: -0.5px;">COFFEE<span style="color: var(--gold)">HUB</span></span>
             </a>
-            <a href="{{ route('menu.index') }}" class="nav-link-custom {{ Request::is('menu*') ? 'active' : '' }}">
-                <i class="bi bi-cup-hot"></i> <span>Thực Đơn</span>
-            </a>
-            <a href="{{ route('orders') }}" class="nav-link-custom {{ Request::is('orders') ? 'active' : '' }}">
-                <i class="bi bi-receipt"></i> <span>Đơn Hàng</span>
-            </a>
-            <a href="{{ route('revenue') }}" class="nav-link-custom {{ Request::is('revenue') ? 'active' : '' }}">
-                <i class="bi bi-bar-chart"></i> <span>Doanh Thu</span>
-            </a>
-            <a href="{{ route('settings') }}" class="nav-link-custom {{ Request::is('settings') ? 'active' : '' }}">
-                <i class="bi bi-gear"></i> <span>Cài Đặt</span>
-            </a>
-        </nav>
 
-        <div class="mt-auto d-flex align-items-center pt-4 border-top border-secondary border-opacity-25 brand-text">
-            <div class="bg-white text-dark rounded-circle d-flex align-items-center justify-content-center me-3 fw-bold" style="width:40px; height:40px;">A</div>
-            <div>
-                <div class="text-white fw-bold small">Admin User</div>
-                <div class="text-white-50" style="font-size: 0.75rem;">Manager</div>
+            <button class="navbar-toggler border-0 shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+                <ul class="navbar-nav gap-1">
+                    <li class="nav-item"><a class="nav-link" href="#">Tổng quan</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="{{ route('menu.index') }}">Thực đơn</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Đơn hàng</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Kho</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Báo cáo</a></li>
+                </ul>
+            </div>
+
+            <div class="d-flex align-items-center gap-3">
+                <div class="dropdown">
+                    <a href="#" class="d-flex align-items-center text-decoration-none dropdown-toggle text-dark" data-bs-toggle="dropdown">
+                        <img src="https://ui-avatars.com/api/?name=Admin&background=6F4E37&color=fff" class="rounded-circle me-2 shadow-sm" width="36" height="36">
+                        <div class="d-none d-md-block text-start">
+                            <small class="d-block fw-bold text-dark" style="font-size: 0.8rem; line-height: 1.2;">Admin</small>
+                            <small class="d-block text-muted" style="font-size: 0.7rem;">Manager</small>
+                        </div>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end border-0 shadow-sm mt-3 rounded-3">
+                        <li><a class="dropdown-item small py-2" href="#">Cài đặt</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item small text-danger py-2" href="#">Đăng xuất</a></li>
+                    </ul>
+                </div>
             </div>
         </div>
-    </div>
+    </nav>
 
-    <!-- MAIN CONTENT -->
-    <div class="main-content">
+    <div class="container-fluid px-lg-5 pb-5">
         @yield('content')
     </div>
 
-    <!-- Modal Xóa -->
     <div class="modal fade" id="deleteModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content shadow-lg border-0 rounded-4">
-                <div class="modal-body p-5 text-center">
-                    <div class="mb-3 text-secondary opacity-50"><i class="bi bi-trash3 fs-1"></i></div>
-                    <h3 class="brand-font fw-bold text-dark">Xác nhận xóa món?</h3>
-                    <p class="text-muted small">Dữ liệu sẽ không thể khôi phục sau khi xóa.</p>
-                    <div class="d-flex justify-content-center gap-3 mt-4">
-                        <button type="button" class="btn btn-light px-4" data-bs-dismiss="modal">Hủy bỏ</button>
+        <div class="modal-dialog modal-dialog-centered modal-sm">
+            <div class="modal-content border-0 shadow-lg rounded-4 overflow-hidden">
+                <div class="modal-body p-4 text-center">
+                    <div class="mb-3 text-danger bg-danger bg-opacity-10 p-3 rounded-circle d-inline-block">
+                        <i class="bi bi-trash3 fs-3"></i>
+                    </div>
+                    <h5 class="fw-bold mb-2">Xóa món này?</h5>
+                    <p class="text-muted small mb-4">Hành động này không thể hoàn tác.</p>
+                    <div class="d-flex gap-2 justify-content-center">
+                        <button type="button" class="btn btn-light btn-sm px-3 rounded-3 fw-medium" data-bs-dismiss="modal">Hủy</button>
                         <form id="deleteForm" method="POST" action="">
                             @csrf @method('DELETE')
-                            <button type="submit" class="btn btn-danger px-4">Đồng ý xóa</button>
+                            <button type="submit" class="btn btn-danger btn-sm px-3 rounded-3 fw-medium">Đồng ý</button>
                         </form>
                     </div>
                 </div>
@@ -135,13 +151,16 @@
     
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
+        // Script xử lý Modal Xóa
         const deleteModal = document.getElementById('deleteModal');
-        deleteModal.addEventListener('show.bs.modal', function (event) {
-            const button = event.relatedTarget;
-            const id = button.getAttribute('data-id');
-            const form = document.getElementById('deleteForm');
-            form.action = '/menu/' + id; 
-        });
+        if (deleteModal) {
+            deleteModal.addEventListener('show.bs.modal', function (event) {
+                const button = event.relatedTarget;
+                const id = button.getAttribute('data-id');
+                const form = document.getElementById('deleteForm');
+                form.action = '/menu/' + id; 
+            });
+        }
     </script>
 </body>
 </html>
